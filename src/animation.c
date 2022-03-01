@@ -5,8 +5,8 @@
 ** where is the animation
 */
 
-#include "../include/my.h"
-#include "../include/objet.h"
+#include "my.h"
+#include "objet.h"
 
 void animation_enemies(animation_t *ani)
 {
@@ -22,34 +22,72 @@ void animation_enemies(animation_t *ani)
         free(texture);
         sfClock_restart(ani->clock);
     }
-    mouv_sprite(ani);
     sfRenderWindow_drawSprite(ani->window, ani->enemies, NULL);
+    animate_the_enemies(ani->enemies, ani);
 }
 
-void mouv_sprite(animation_t *ani)
+void animate_the_enemies_3(sfSprite *enemy, sfVector2f pos_of_the_enemy, \
+                            animation_t *ani)
 {
-    int x1 = 10;
-    int y1 = 10;
-    int x2 = -10;
-    int y2 = -10;
+    if (pos_of_the_enemy.x < 1510 && pos_of_the_enemy.y <= 710 &&
+        pos_of_the_enemy.x >= 1190) {
+        sfSprite_move(enemy, (sfVector2f) { 5, 0});
+    }
+    if (pos_of_the_enemy.x >= 1510 && pos_of_the_enemy.y < 880) {
+        sfSprite_move(enemy, (sfVector2f) { 0, 5});
+        pos_of_the_enemy = sfSprite_getPosition(enemy);
+    }
+    if (pos_of_the_enemy.x < 1920 && pos_of_the_enemy.y >= 880 &&
+        pos_of_the_enemy.x >= 1510)
+        sfSprite_move(enemy, (sfVector2f) { 5, 0});
+    if (pos_of_the_enemy.x == 1920 && pos_of_the_enemy.y == 880) {
+        sfSprite_setPosition(enemy, (sfVector2f) {-50, 120});
+        remove_life(ani);
+    }
+}
 
-    sfVector2f pos = sfSprite_getPosition(ani->enemies);
-    if (pos.x <= 450)
-        sfSprite_move(ani->enemies, (sfVector2f) {x1, 0});
-    if (pos.x >= 450 && pos.y <= 220 && pos.x <= 470)
-        sfSprite_move(ani->enemies, (sfVector2f) {0, y1});
-    if (pos.x >= 450 && pos.y >= 220 && pos.x <= 770)
-        sfSprite_move(ani->enemies, (sfVector2f) {x1, 0});
-    if (pos.x >= 770 && pos.y <= 230 && pos.y >= 50 && pos.x <= 780)
-        sfSprite_move(ani->enemies, (sfVector2f) {0, y2});
-    if (pos.x >= 770 && pos.y <= 60 && pos.x <= 1100)
-        sfSprite_move(ani->enemies, (sfVector2f) {x1, 0});
-    if (pos.x >= 1110 && pos.y >= 50 && pos.y <= 430)
-        sfSprite_move(ani->enemies, (sfVector2f) {0, y1});
-    if (pos.x <= 1110 && pos.x >= 760 && pos.y >= 420)
-        sfSprite_move(ani->enemies, (sfVector2f) {x2, 0});
-    if (pos.x <= 770 && pos.y <= 810 && pos.y >= 420)
-        sfSprite_move(ani->enemies, (sfVector2f) {0, y1});
-    if (pos.x >= 750 && pos.x <= 1110 && pos.y >= 800)
-        sfSprite_move(ani->enemies, (sfVector2f) {x1, 0});
+void animate_the_enemies_2(sfSprite *enemy, sfVector2f pos_of_the_enemy, \
+                            animation_t *ani)
+{
+    if (pos_of_the_enemy.x <= 850 && pos_of_the_enemy.y < 880 &&
+        pos_of_the_enemy.y >= 510)
+        sfSprite_move(enemy, (sfVector2f) { 0, 5});
+    if (pos_of_the_enemy.x < 1190 && pos_of_the_enemy.y == 880 &&
+        pos_of_the_enemy.x >= 790)
+        sfSprite_move(enemy, (sfVector2f) { 5, 0});
+    if (pos_of_the_enemy.x >= 1190 && pos_of_the_enemy.y >= 710 &&
+        pos_of_the_enemy.x < 1435)
+        sfSprite_move(enemy, (sfVector2f) { 0, -5});
+    animate_the_enemies_3(enemy, pos_of_the_enemy, ani);
+}
+
+void animate_the_enemies_1(sfSprite *enemy, sfVector2f pos_of_the_enemy, \
+                            animation_t *ani)
+{
+    if (pos_of_the_enemy.x >= 840 && pos_of_the_enemy.y > 120 &&
+        pos_of_the_enemy.x < 1120 && pos_of_the_enemy.y <= 300)
+        sfSprite_move(enemy, (sfVector2f) { 0, -5});
+    if (pos_of_the_enemy.y <= 120 && pos_of_the_enemy.x < 1180 &&
+        pos_of_the_enemy.x >= 780)
+        sfSprite_move(enemy, (sfVector2f) { 5, 0});
+    if (pos_of_the_enemy.x >= 1180 && pos_of_the_enemy.y < 510)
+        sfSprite_move(enemy, (sfVector2f) { 0, 5});
+    if (pos_of_the_enemy.x > 850 && pos_of_the_enemy.y >= 510 &&
+        pos_of_the_enemy.y < 520)
+        sfSprite_move(enemy, (sfVector2f) { -5, 0});
+    animate_the_enemies_2(enemy, pos_of_the_enemy, ani);
+}
+
+void animate_the_enemies(sfSprite *enemy, animation_t *ani)
+{
+    sfVector2f pos_of_the_enemy = sfSprite_getPosition(enemy);
+
+    if (pos_of_the_enemy.x < 510 && pos_of_the_enemy.y == 120)
+        sfSprite_move(enemy, (sfVector2f) { 5, 0 });
+    if (pos_of_the_enemy.x >= 510 && pos_of_the_enemy.x < 720 &&
+        pos_of_the_enemy.y < 300 && pos_of_the_enemy.y >= 120)
+        sfSprite_move(enemy, (sfVector2f) { 0, 5});
+    if (pos_of_the_enemy.y >= 300 && pos_of_the_enemy.x < 840)
+        sfSprite_move(enemy, (sfVector2f) { 5, 0 });
+    animate_the_enemies_1(enemy, pos_of_the_enemy, ani);
 }

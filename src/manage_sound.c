@@ -5,19 +5,22 @@
 ** manage_sound
 */
 
-#include "../include/my.h"
-#include "../include/objet.h"
+#include "my.h"
+#include "objet.h"
 
-void create_song(animation_t *ani)
+int create_song(animation_t *ani)
 {
     ani->music = sfMusic_createFromFile("music1.ogg");
+    if (!ani->music)
+        return (84);
     ani->menu->music = sfMusic_createFromFile("music2.ogg");
-    if (!ani->music || !ani->menu->music)
-        return;
+    if (!ani->menu->music)
+        return (84);
     sfMusic_play(ani->menu->music);
     sfMusic_setLoop(ani->music, sfTrue);
     sfMusic_setLoop(ani->menu->music, sfTrue);
     ani->menu->status_music = 1;
+    return (0);
 }
 
 void verif_music_game(animation_t * ani)

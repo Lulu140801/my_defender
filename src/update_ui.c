@@ -5,8 +5,8 @@
 ** update_ui
 */
 
-#include "../include/my.h"
-#include "../include/objet.h"
+#include "my.h"
+#include "objet.h"
 
 void update_color_text(animation_t *ani)
 {
@@ -68,7 +68,8 @@ void grab_tower(animation_t *ani, sfVector2i pos_mouse)
 
     }
     if (pos_mouse.x >= 502 && pos_mouse.x <= 624 && \
-        pos_mouse.y >= 770 && pos_mouse.y <= 938 && ani->money >= ULTRA_TOWER) {
+        pos_mouse.y >= 770 && pos_mouse.y <= 938 && \
+        ani->money >= ULTRA_TOWER) {
         ani->tower->grab = 3;
     }
 }

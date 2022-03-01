@@ -5,8 +5,8 @@
 ** main of game
 */
 
-#include "../include/my.h"
-#include "../include/objet.h"
+#include "my.h"
+#include "objet.h"
 
 void handle_event(animation_t *ani)
 {
@@ -18,7 +18,7 @@ void handle_event(animation_t *ani)
                 sort_button_menu(ani, ani->event.mouseButton);
                 break;
             case GAME:
-                sort_button_game(ani, ani->event.mouseButton);
+                sort_button_game(ani);
                 break;
             default:
                 break;
@@ -50,6 +50,10 @@ void game_loop(animation_t *ani)
         ani->seconds = ani->time.microseconds / 1000000.0;
         display(ani);
         handle_event(ani);
+        if (ani->life == 0) {
+            sfRenderWindow_close(ani->window);
+            my_putstr("you lost !!\n");
+        }
     }
     destroy_music(ani);
 }
@@ -62,7 +66,8 @@ int main(void)
 
     ani.menu = &menu;
     ani.tower = &tower;
-    init_struct(&ani);
+    if (init_struct(&ani) == 84)
+        return (84);
     game_loop(&ani);
     sfRenderWindow_destroy(ani.window);
     return (0);

@@ -24,7 +24,7 @@ SRC = 	$(SRC_DIR)/main.c \
 		$(SRC_DIR)/update_ui.c \
 		$(SRC_DIR)/sup_init.c \
 		$(SRC_DIR)/grab_function.c \
-		$(SRC_DIR)/reset_pos_tower.c
+		$(SRC_DIR)/manage_life.c
 
 SRC2 = $(SRC_DIR2)/tests.c
 
@@ -32,7 +32,7 @@ TEST = test/tests.c
 
 TEST_NAME = unit_tests
 
-CFLAGS += -Iinclude -W -Wall -Wextra -Llib/my -lmy -l csfml-graphics -l csfml-system -l csfml-audio -g3
+CFLAGS += -Iinclude -W -Wall -Wextra -Llib/my -lmy -l csfml-graphics -l csfml-system -l csfml-audio -l csfml-window
 
 NAME = my_defender
 

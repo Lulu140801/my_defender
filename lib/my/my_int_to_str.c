@@ -28,12 +28,12 @@ char *my_int_to_str(int number)
         string_converted[1] = '\0';
         return (string_converted);
     }
-    while (number > 0){
+    while (number > 0) {
         string_converted[index] = number % 10 + 48;
         number = number / 10;
         index = index + 1;
     }
-    if (verif == 1){
+    if (verif == 1) {
         string_converted[index] = '-';
         string_converted[index + 1] = '\0';
     } else string_converted[index] = '\0';

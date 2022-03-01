@@ -5,8 +5,8 @@
 ** sort_event
 */
 
-#include "../include/my.h"
-#include "../include/objet.h"
+#include "my.h"
+#include "objet.h"
 
 void sort_button_menu(animation_t *ani, sfMouseButtonEvent mouse)
 {
@@ -20,13 +20,16 @@ void sort_button_menu(animation_t *ani, sfMouseButtonEvent mouse)
         sfRenderWindow_close(ani->window);
 }
 
-void sort_button_game(animation_t *ani, sfMouseButtonEvent mouse)
+void sort_button_game(animation_t *ani)
 {
     if (ani->tower->grab == -1)
         select_tower(ani, sfMouse_getPositionRenderWindow(ani->window));
-    if (ani->event.type != sfEvtMouseButtonPressed) return;
-    if (ani->tower->grab != -1)
+    if (ani->event.type != sfEvtMouseButtonPressed)
+        return;
+    if (ani->tower->grab != -1) {
+        set_tower_pos(ani, sfMouse_getPositionRenderWindow(ani->window));
         reset_sort_tower(ani);
+    }
     grab_tower(ani, sfMouse_getPositionRenderWindow(ani->window));
     return;
 }
